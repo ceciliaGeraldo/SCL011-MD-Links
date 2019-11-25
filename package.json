@@ -1,4 +1,40 @@
 {
-  "name": "md-links",
-  "version": "0.1.0"
+  "name": "md-links-cgeraldo",
+  "version": "0.1.0",
+  "bin": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "eslint": "eslint --ext .js src/ test/",
+    "htmlhint": "htmlhint src/*.html",
+    "pretest": "npm run eslint && npm run htmlhint"
+  },
+  "description": "## Índice",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ceciliaGeraldo/SCL011-MD-Links.git"
+  },
+  "keywords": [
+    "markdown"
+  ],
+  "author": "Cecilia Geraldo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ceciliaGeraldo/SCL011-MD-Links/issues"
+  },
+  "homepage": "https://github.com/ceciliaGeraldo/SCL011-MD-Links#readme",
+  "dependencies": {
+    "acorn": "^7.1.0",
+    "acorn-jsx": "^5.1.0",
+    "eslint": "^6.6.0",
+    "eslint-plugin-jest": "^23.0.4",
+    "htmlhint": "^0.11.0",
+    "jest": "^24.9.0",
+    "markdown-link-extractor": "^1.2.2",
+    "node-fetch": "^2.6.0",
+    "typescript": "^3.7.2"
+  }
 }
