@@ -3,12 +3,29 @@ const path = require('path');
 const marked = require('marked');
 const fetch = require('node-fetch');
 
+const isFileOrIsFolder = (path =>{
+  return new Promise((resolve,reject) => {
+    fs.lstat(path, (err, stats)=> {
+      if(err){
+          reject(new Error("El archivo o carpeta indicado no existe"))
+      }else if(stats.isFile()===true){
+        console.log("Es un archivo")
+      }else if(stats.isDirectory()===true){
+        console.log("Es una carpeta")
+      }
+      resolve(stats);
+    })
+  })
+
+ 
+})
+
 //función leer archivo .md
 const readMd = (path => {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
-        reject(new Error("¡Ouch! No se ha encontrado el archivo " + path))
+        reject(new Error("¡Ouch! No hemos encontrado el archivo " + path))
       }
       resolve(data)
       //console.log(data)
@@ -47,16 +64,21 @@ const searchLinks = (path => {
         }
       } 
         marked(result,{renderer:renderer}); 
+        
+        if(links.length===0){
+          reject(new Error("Este archivo no contiene links"))
+        }
         resolve(links)
         console.log(links)
     })
     .catch(err => {
+      //no se ha encontrad  o ningún enlace
       reject(err)
       })
   })
 })
 
-searchLinks(routeFile);
+isFileOrIsFolder(routeFile);
 
 /*
 if(require.main===module){
