@@ -1,17 +1,25 @@
+const mdLinks = require('./lib/mdLinks.js');
 const fs = require('fs');
 const path = require('path');
 const marked = require('marked');
 const fetch = require('node-fetch');
 
+
 const isFileOrIsFolder = (path =>{
   return new Promise((resolve,reject) => {
     fs.lstat(path, (err, stats)=> {
       if(err){
-          reject(new Error("El archivo o carpeta indicado no existe"))
-      }else if(stats.isFile()===true){
-        console.log("Es un archivo")
+        reject(new Error("El archivo o carpeta"+ path + " no existe"))
+      }else if(isMdFormat(path)){        
+        return searchLinks(path);
       }else if(stats.isDirectory()===true){
-        console.log("Es una carpeta")
+        fs.readdir(path, 'utf8',(err,file)=>{
+          file.forEach(element => {
+            if(isMdFormat(element)){
+              searchLinks(path+'/'+element);
+            }            
+          });
+        })
       }
       resolve(stats);
     })
@@ -20,9 +28,18 @@ const isFileOrIsFolder = (path =>{
  
 })
 
+const isMdFormat = (path =>{
+
+  if(path.slice(-3)== '.md'){
+    return true;
+  }else {
+    return false;
+  }
+})
 //función leer archivo .md
 const readMd = (path => {
   return new Promise((resolve, reject) => {
+    
     fs.readFile(path, 'utf8', (err, data) => {
       if (err) {
         reject(new Error("¡Ouch! No hemos encontrado el archivo " + path))
