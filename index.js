@@ -9,9 +9,10 @@ const pathJS = require('path')
   //si existen errores de escritura, lo normaliza para leerlo con éxito (path.normalize)
   routeFile = pathJS.normalize(routeFile);
 
-  
-mdLinks.findMdFiles(routeFile)
-
+//mdLinks.isFileOrIsFolder(routeFile)
+//mdLinks.findMdFiles(routeFile)
+mdLinks.validateLinks(routeFile)
+//mdLinks.readMd(routeFile)
 
 /*
 if(require.main===module){
